@@ -2,12 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './index.css';
+import { Provider } from 'react-redux';
+
+import { store } from './store';
 import Routers from './routers';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Routers />
+    <Provider store={store}>
+      <Routers />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
 );
