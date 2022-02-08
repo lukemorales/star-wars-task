@@ -1,4 +1,4 @@
-import type { Planet } from '../types';
+import type { Planet } from '../../types';
 import './Grid.css';
 
 export interface Action {
