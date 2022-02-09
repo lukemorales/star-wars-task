@@ -1,13 +1,12 @@
-import './Films.css';
+import './styles.css';
 
 import { useMemo } from 'react';
 
 import { useParams } from 'react-router-dom';
 
-import Grid from '../Grid';
-import { GridProps } from '../Grid/Grid';
 import { Film } from '../../types';
 import { useGetPlanetFilmsQuery } from '../../queries';
+import Grid, { GridProps } from '../../components/Grid';
 
 const Films = () => {
   const { planetId } = useParams<Record<'planetId', string>>();

@@ -1,5 +1,5 @@
 import Bg from '../../assets/space.jpg';
-import './NotFoundPage.css';
+import './styles.css';
 
 const NotFoundPage = () => (
   <div className="not-found-page" style={{ backgroundImage: `url(${Bg})` }}>

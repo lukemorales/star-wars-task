@@ -2,17 +2,17 @@ import React from 'react';
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import App from '../components/App';
-import Films from '../components/Films';
-import Planet from '../components/Planet';
-import Residents from '../components/Residents';
-import NotFoundPage from '../components/NotFoundPage';
+import Films from '../pages/Films';
+import Planets from '../pages/Planets';
+import PlanetDetails from '../pages/PlanetDetails';
+import Residents from '../pages/Residents';
+import NotFoundPage from '../pages/NotFound';
 
 const Router = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={App} />
-      <Route exact path="/planets/:planetId" component={Planet} />
+      <Route exact path="/" component={Planets} />
+      <Route exact path="/planets/:planetId" component={PlanetDetails} />
       <Route exact path="/planets/:planetId/films" component={Films} />
       <Route exact path="/planets/:planetId/residents" component={Residents} />
       <Route component={NotFoundPage} />

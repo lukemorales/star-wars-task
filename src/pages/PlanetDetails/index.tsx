@@ -1,15 +1,14 @@
-import './Planet.css';
+import './styles.css';
 
 import { useMemo } from 'react';
 
 import { useParams } from 'react-router-dom';
 
-import Grid from '../Grid';
-import { GridProps } from '../Grid/Grid';
 import { Planet } from '../../types';
 import { useGetSinglePlanetQuery } from '../../queries';
+import Grid, { GridProps } from '../../components/Grid';
 
-const PlanetPage = () => {
+const PlanetDetails = () => {
   const { planetId } = useParams<Record<'planetId', string>>();
 
   const planetQuery = useGetSinglePlanetQuery(planetId);
@@ -43,4 +42,4 @@ const PlanetPage = () => {
   );
 };
 
-export default PlanetPage;
+export default PlanetDetails;
