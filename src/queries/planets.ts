@@ -24,8 +24,8 @@ export const planetsApi = createApi({
   reducerPath: 'planetsApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://swapi.dev/api/' }),
   endpoints: (builder) => ({
-    getPlanets: builder.query<SwapiAPIResponse<PlanetWithId>, void | null>({
-      query: () => `planets`,
+    getPlanets: builder.query<SwapiAPIResponse<PlanetWithId>, number>({
+      query: (page) => `planets/?page=${page}`,
       transformResponse: (response: SwapiAPIResponse<Planet>) => ({
         ...response,
         results: response.results.map((planet) => ({
