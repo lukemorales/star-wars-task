@@ -1,23 +1,19 @@
-import type { Planet } from '../types';
+import type { Planet, PlanetWithId } from '../../types';
 import './Grid.css';
 
 export interface Action {
   label: string;
-  action: (row: Planet) => void;
+  action: (row: PlanetWithId) => void;
 }
 
 interface GridProps {
-  data: {
-    header?: Array<keyof Planet>;
-    values?: Planet[];
-    actions?: Action[];
-  };
+  header?: Array<keyof Planet>;
+  values?: PlanetWithId[];
+  actions?: Action[];
 }
 
-function Grid(props: GridProps) {
-  const {
-    data: { header = [], values = [], actions = [] },
-  } = props;
+const Grid = ({ header = [], values = [], actions = [] }: GridProps) => {
+  const hasActions = !!actions.length;
 
   return (
     <table className="gridTable">
@@ -26,9 +22,11 @@ function Grid(props: GridProps) {
           {header.map((colName) => (
             <th key={colName}>{colName}</th>
           ))}
-          {!!actions.length && <th>Actions</th>}
+
+          {hasActions && <th>Actions</th>}
         </tr>
       </thead>
+
       <tbody>
         {values.map((row, index) => (
           // eslint-disable-next-line react/no-array-index-key
@@ -36,10 +34,11 @@ function Grid(props: GridProps) {
             {header.map((colName) => (
               <td key={colName}>{row[colName]}</td>
             ))}
-            {!!actions.length && (
+
+            {hasActions && (
               <td className="gridActions">
                 {actions.map(({ label, action }) => (
-                  <button type="button" onClick={() => action(row)}>
+                  <button key={label} type="button" onClick={() => action(row)}>
                     {label}
                   </button>
                 ))}
@@ -50,6 +49,6 @@ function Grid(props: GridProps) {
       </tbody>
     </table>
   );
-}
+};
 
 export default Grid;
