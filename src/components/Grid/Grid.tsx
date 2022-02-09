@@ -1,18 +1,21 @@
-import type { Planet, PlanetWithId } from '../../types';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import './Grid.css';
 
-export interface Action {
+export interface Action<T extends Record<string, any>> {
   label: string;
-  action: (row: PlanetWithId) => void;
+  action: (row: T) => void;
+  isVisible?: (row: T) => boolean;
 }
 
-interface GridProps {
-  header?: Array<keyof Planet>;
-  values?: PlanetWithId[];
-  actions?: Action[];
+export interface GridProps<T extends Record<string, any>> {
+  header?: Array<keyof T>;
+  values?: T[];
+  actions?: Action<T>[];
 }
 
-const Grid = ({ header = [], values = [], actions = [] }: GridProps) => {
+const Grid = <T extends Record<string, any>>(props: GridProps<T>) => {
+  const { header = [], values = [], actions = [] } = props;
+
   const hasActions = !!actions.length;
 
   return (
@@ -20,7 +23,7 @@ const Grid = ({ header = [], values = [], actions = [] }: GridProps) => {
       <thead>
         <tr>
           {header.map((colName) => (
-            <th key={colName}>{colName}</th>
+            <th key={String(colName)}>{colName}</th>
           ))}
 
           {hasActions && <th>Actions</th>}
@@ -32,16 +35,26 @@ const Grid = ({ header = [], values = [], actions = [] }: GridProps) => {
           // eslint-disable-next-line react/no-array-index-key
           <tr key={index}>
             {header.map((colName) => (
-              <td key={colName}>{row[colName]}</td>
+              <td key={String(colName)}>{row[colName]}</td>
             ))}
 
             {hasActions && (
               <td className="gridActions">
-                {actions.map(({ label, action }) => (
-                  <button key={label} type="button" onClick={() => action(row)}>
-                    {label}
-                  </button>
-                ))}
+                {actions.map(({ label, action, isVisible }) => {
+                  if (!isVisible?.(row)) {
+                    return null;
+                  }
+
+                  return (
+                    <button
+                      key={label}
+                      type="button"
+                      onClick={() => action(row)}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
               </td>
             )}
           </tr>
