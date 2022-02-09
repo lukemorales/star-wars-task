@@ -5,7 +5,7 @@ export interface SwapiAPIResponse<T> {
   results: T[];
 }
 
-export interface Planet {
+export type Planet = {
   name: string;
   rotation_period: string;
   orbital_period: string;
@@ -20,8 +20,8 @@ export interface Planet {
   created: string;
   edited: string;
   url: string;
-}
+};
 
-export interface PlanetWithId extends Planet {
+export type PlanetWithId = Planet & {
   id: string;
-}
+};
