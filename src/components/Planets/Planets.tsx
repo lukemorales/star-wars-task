@@ -1,18 +1,21 @@
 import './Planets.css';
 
-import { ComponentProps, useMemo } from 'react';
+import { useMemo } from 'react';
+
+import { useHistory } from 'react-router-dom';
 
 import Grid from '../Grid';
+import { GridProps } from '../Grid/Grid';
 import type { PlanetWithId } from '../../types';
-
-type GridProps = ComponentProps<typeof Grid>;
 
 interface PlanetsProps {
   data: PlanetWithId[];
 }
 
 const Planets = ({ data }: PlanetsProps) => {
-  const gridProps = useMemo<GridProps>(
+  const history = useHistory();
+
+  const gridData = useMemo<GridProps<PlanetWithId>>(
     () => ({
       header: [
         'name',
@@ -28,27 +31,28 @@ const Planets = ({ data }: PlanetsProps) => {
       values: data,
       actions: [
         {
+          label: 'Go to Details',
+          action: (planet) => history.push(`/planets/${planet.id}`),
+          isVisible: () => true,
+        },
+        {
           label: 'Go to Films',
-          action: (planet) => {
-            console.log(`redirect to grid with ${planet.films.length} Films`);
-          },
+          action: (planet) => history.push(`/planets/${planet.id}/films`),
+          isVisible: (planet) => planet.films.length > 0,
         },
         {
           label: 'Go to Residents',
-          action: (planet) => {
-            console.log(
-              `redirect to grid with ${planet.residents.length} Residents`,
-            );
-          },
+          action: (planet) => history.push(`/planets/${planet.id}/residents`),
+          isVisible: (planet) => planet.residents.length > 0,
         },
       ],
     }),
-    [data],
+    [data, history],
   );
 
   return (
     <div className="App">
-      <Grid {...gridProps} />
+      <Grid {...gridData} />
     </div>
   );
 };
