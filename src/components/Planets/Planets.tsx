@@ -31,13 +31,18 @@ const Planets = ({ data }: PlanetsProps) => {
       values: data,
       actions: [
         {
+          label: 'Go to Details',
+          action: (planet) => history.push(`/planets/${planet.id}`),
+          isVisible: () => true,
+        },
+        {
           label: 'Go to Films',
-          action: (planet) => history.push(`/planet/${planet.id}/films`),
+          action: (planet) => history.push(`/planets/${planet.id}/films`),
           isVisible: (planet) => planet.films.length > 0,
         },
         {
           label: 'Go to Residents',
-          action: (planet) => history.push(`/planet/${planet.id}/residents`),
+          action: (planet) => history.push(`/planets/${planet.id}/residents`),
           isVisible: (planet) => planet.residents.length > 0,
         },
       ],

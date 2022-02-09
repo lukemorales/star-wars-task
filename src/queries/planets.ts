@@ -34,6 +34,9 @@ export const planetsApi = createApi({
         })),
       }),
     }),
+    getSinglePlanet: builder.query<Planet, string>({
+      query: (id) => `planets/${id}`,
+    }),
     getPlanetFilms: builder.query<GetPlanetFilmsResponse, string>({
       queryFn: async (planetId, queryApi, _extraOptions, fetchWithBQ) => {
         const apiCache = (queryApi.getState() as any).planetsApi;
@@ -111,6 +114,7 @@ export const planetsApi = createApi({
 
 export const {
   useGetPlanetsQuery,
+  useGetSinglePlanetQuery,
   useGetPlanetFilmsQuery,
   useGetPlanetResidentsQuery,
 } = planetsApi;
