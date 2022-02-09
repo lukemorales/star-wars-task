@@ -34,9 +34,15 @@ const Grid = <T extends Record<string, any>>(props: GridProps<T>) => {
         {values.map((row, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <tr key={index}>
-            {header.map((colName) => (
-              <td key={String(colName)}>{row[colName]}</td>
-            ))}
+            {header.map((colName) => {
+              const content = row[colName];
+
+              return (
+                <td key={String(colName)}>
+                  {Array.isArray(content) ? content.length : content}
+                </td>
+              );
+            })}
 
             {hasActions && (
               <td className="gridActions">
