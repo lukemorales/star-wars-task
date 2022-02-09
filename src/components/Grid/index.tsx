@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import './Grid.css';
+import './styles.css';
 
 export interface Action<T extends Record<string, any>> {
   label: string;

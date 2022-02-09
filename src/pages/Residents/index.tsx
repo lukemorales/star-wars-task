@@ -1,12 +1,11 @@
-import './Residents.css';
+import './styles.css';
 
 import { useMemo } from 'react';
 
 import { useParams } from 'react-router-dom';
 
-import Grid from '../Grid';
-import { GridProps } from '../Grid/Grid';
 import { Resident } from '../../types';
+import Grid, { GridProps } from '../../components/Grid';
 import { useGetPlanetResidentsQuery } from '../../queries';
 
 const Residents = () => {
