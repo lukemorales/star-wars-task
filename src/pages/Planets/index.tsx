@@ -26,6 +26,8 @@ const Planets = () => {
         'terrain',
         'surface_water',
         'population',
+        'films',
+        'residents',
       ],
       values: planetsQuery.data?.results,
       actions: [

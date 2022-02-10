@@ -22,9 +22,22 @@ const Grid = <T extends Record<string, any>>(props: GridProps<T>) => {
     <table className="gridTable">
       <thead>
         <tr>
-          {header.map((colName) => (
-            <th key={String(colName)}>{colName}</th>
-          ))}
+          {header.map((colName) => {
+            const rowValue = values[0][colName];
+
+            let rowType = Number.isNaN(Number(rowValue)) ? 'string' : 'number';
+
+            if (/unknown/i.test(rowValue) || Array.isArray(rowValue)) {
+              rowType = 'number';
+            }
+
+            return (
+              <th
+                key={String(colName)}
+                className={rowType !== 'number' ? '' : 'numberCell'}
+              >{`${colName} (${rowType})`}</th>
+            );
+          })}
 
           {hasActions && <th>Actions</th>}
         </tr>
@@ -35,11 +48,21 @@ const Grid = <T extends Record<string, any>>(props: GridProps<T>) => {
           // eslint-disable-next-line react/no-array-index-key
           <tr key={index}>
             {header.map((colName) => {
-              const content = row[colName];
+              let content = row[colName];
+
+              if (Array.isArray(content)) {
+                content = content.length;
+              }
+
+              const isStringCol =
+                Number.isNaN(Number(content)) && !/unknown/i.test(content);
 
               return (
-                <td key={String(colName)}>
-                  {Array.isArray(content) ? content.length : content}
+                <td
+                  key={String(colName)}
+                  className={isStringCol ? '' : 'numberCell'}
+                >
+                  {content}
                 </td>
               );
             })}
