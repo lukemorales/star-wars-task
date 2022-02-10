@@ -1,34 +1,16 @@
-.gridTable {
-  /* border: 1px solid #000; */
-  width: 100%;
-  border-spacing: 0;
-  border-collapse: separate;
-}
-
 .gridTable thead tr th {
   font-size: 14px;
   font-weight: 600;
-  text-transform: uppercase;
-  border-bottom: 1px solid #333;
-  padding: 5px 10px;
-  color: #aaa;
+  color: #fff;
+  background: #2a3546;
 }
 
 .gridTable tbody tr td {
-  padding: 10px;
   font-size: 16px;
   font-weight: 400;
-  border-bottom: 1px solid #333;
+  background: #fff;
 }
 
 .gridTable tbody tr:hover td {
   background: #f1f1f1;
-}
-
-.gridTable .numberCell {
-  text-align: right;
-}
-
-.gridActions button {
-  margin: 0 5px;
 }

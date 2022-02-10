@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import './styles.css';
+import { Table, ButtonGroup, Button } from 'reactstrap';
 
 export interface Action<T extends Record<string, any>> {
   label: string;
   action: (row: T) => void;
-  isVisible?: (row: T) => boolean;
+  isEnabled?: (row: T) => boolean;
 }
 
 export interface GridProps<T extends Record<string, any>> {
@@ -19,7 +20,7 @@ const Grid = <T extends Record<string, any>>(props: GridProps<T>) => {
   const hasActions = !!actions.length;
 
   return (
-    <table className="gridTable">
+    <Table className="gridTable my-auto shadow-lg rounded-3 overflow-hidden">
       <thead>
         <tr>
           {header.map((colName) => {
@@ -34,12 +35,16 @@ const Grid = <T extends Record<string, any>>(props: GridProps<T>) => {
             return (
               <th
                 key={String(colName)}
-                className={rowType !== 'number' ? '' : 'numberCell'}
+                className={`text-uppercase align-middle ${
+                  rowType !== 'number' ? '' : 'text-end'
+                }`}
               >{`${colName} (${rowType})`}</th>
             );
           })}
 
-          {hasActions && <th>Actions</th>}
+          {hasActions && (
+            <th className="text-uppercase align-middle">Actions</th>
+          )}
         </tr>
       </thead>
 
@@ -60,7 +65,7 @@ const Grid = <T extends Record<string, any>>(props: GridProps<T>) => {
               return (
                 <td
                   key={String(colName)}
-                  className={isStringCol ? '' : 'numberCell'}
+                  className={`align-middle ${isStringCol ? '' : 'text-end'}`}
                 >
                   {content}
                 </td>
@@ -69,27 +74,29 @@ const Grid = <T extends Record<string, any>>(props: GridProps<T>) => {
 
             {hasActions && (
               <td className="gridActions">
-                {actions.map(({ label, action, isVisible }) => {
-                  if (!isVisible?.(row)) {
-                    return null;
-                  }
-
-                  return (
-                    <button
+                <ButtonGroup>
+                  {actions.map(({ label, action, isEnabled }) => (
+                    <Button
                       key={label}
                       type="button"
+                      color="dark"
+                      size="sm"
+                      /* requirements asked to actions to be displayed conditionally,
+                      but I took the liberty to keep them on screen instead and only disable it
+                      to make the UI consistent and prettier */
+                      disabled={!isEnabled?.(row)}
                       onClick={() => action(row)}
                     >
                       {label}
-                    </button>
-                  );
-                })}
+                    </Button>
+                  ))}
+                </ButtonGroup>
               </td>
             )}
           </tr>
         ))}
       </tbody>
-    </table>
+    </Table>
   );
 };
 

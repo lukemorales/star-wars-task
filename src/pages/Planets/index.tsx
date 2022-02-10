@@ -1,12 +1,13 @@
-import './styles.css';
-
 import { useMemo, useState } from 'react';
 
+import { ButtonGroup, Button, Toast, ToastHeader, ToastBody } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
 
 import type { PlanetWithId } from '../../types';
 import { useGetPlanetsQuery } from '../../queries';
 import Grid, { GridProps } from '../../components/Grid';
+import Heading from '../../components/Heading';
+import Container from '../../components/Container';
 
 const Planets = () => {
   const history = useHistory();
@@ -34,17 +35,17 @@ const Planets = () => {
         {
           label: 'Go to Details',
           action: (planet) => history.push(`/planets/${planet.id}`),
-          isVisible: () => true,
+          isEnabled: () => true,
         },
         {
           label: 'Go to Films',
           action: (planet) => history.push(`/planets/${planet.id}/films`),
-          isVisible: (planet) => planet.films.length > 0,
+          isEnabled: (planet) => planet.films.length > 0,
         },
         {
           label: 'Go to Residents',
           action: (planet) => history.push(`/planets/${planet.id}/residents`),
-          isVisible: (planet) => planet.residents.length > 0,
+          isEnabled: (planet) => planet.residents.length > 0,
         },
       ],
     }),
@@ -52,53 +53,39 @@ const Planets = () => {
   );
 
   return (
-    <div className="App">
-      <h1>Star Wars Planets </h1>
+    <Container>
+      <Heading as="h1">Star Wars Planets </Heading>
+
+      {planetsQuery.isError && <div>An error has happened</div>}
 
       {planetsQuery.isLoading && <span>Loading Planets...</span>}
 
-      {planetsQuery.data && (
-        <>
-          <Grid {...gridData} />
-          <div
-            style={{
-              marginTop: '0.5rem',
-              display: 'flex',
-              justifyContent: 'end',
-              gap: '2rem',
-              fontSize: '0.75rem',
-              height: 16,
-            }}
-          >
-            {planetsQuery.isFetching && 'Loading more planets...'}
-          </div>
+      {planetsQuery.data && <Grid {...gridData} />}
 
-          <div
-            style={{
-              marginTop: '2rem',
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '2rem',
-            }}
-          >
-            <button
-              type="button"
-              disabled={!planetsQuery.data.previous}
-              onClick={() => setPage((prevPage) => prevPage - 1)}
-            >
-              Prev page
-            </button>
-            <button
-              type="button"
-              disabled={!planetsQuery.data.next}
-              onClick={() => setPage((prevPage) => prevPage + 1)}
-            >
-              Next page
-            </button>
-          </div>
-        </>
-      )}
-    </div>
+      <ButtonGroup className="mt-4">
+        <Button
+          type="button"
+          disabled={!planetsQuery.data?.previous}
+          onClick={() => setPage((prevPage) => prevPage - 1)}
+        >
+          Prev page
+        </Button>
+        <Button
+          type="button"
+          disabled={!planetsQuery.data?.next}
+          onClick={() => setPage((prevPage) => prevPage + 1)}
+        >
+          Next page
+        </Button>
+      </ButtonGroup>
+
+      <div className="position-fixed bottom-0 end-0 p-3" style={{ zIndex: 11 }}>
+        <Toast isOpen={planetsQuery.isFetching}>
+          <ToastHeader>Star Wars API</ToastHeader>
+          <ToastBody className="text-start">Loading more planets...</ToastBody>
+        </Toast>
+      </div>
+    </Container>
   );
 };
 
