@@ -7,6 +7,7 @@ import type { PlanetWithId } from '../../types';
 import { useGetPlanetsQuery } from '../../queries';
 import Grid, { GridProps } from '../../components/Grid';
 import Heading from '../../components/Heading';
+import Container from '../../components/Container';
 
 const Planets = () => {
   const history = useHistory();
@@ -52,48 +53,39 @@ const Planets = () => {
   );
 
   return (
-    <div className="text-center d-flex flex-column align-items-center justify-content-between">
+    <Container>
       <Heading as="h1">Star Wars Planets </Heading>
 
       {planetsQuery.isError && <div>An error has happened</div>}
 
       {planetsQuery.isLoading && <span>Loading Planets...</span>}
 
-      {planetsQuery.data && (
-        <>
-          <Grid {...gridData} />
+      {planetsQuery.data && <Grid {...gridData} />}
 
-          <ButtonGroup className="mt-4">
-            <Button
-              type="button"
-              disabled={!planetsQuery.data.previous}
-              onClick={() => setPage((prevPage) => prevPage - 1)}
-            >
-              Prev page
-            </Button>
-            <Button
-              type="button"
-              disabled={!planetsQuery.data.next}
-              onClick={() => setPage((prevPage) => prevPage + 1)}
-            >
-              Next page
-            </Button>
-          </ButtonGroup>
+      <ButtonGroup className="mt-4">
+        <Button
+          type="button"
+          disabled={!planetsQuery.data?.previous}
+          onClick={() => setPage((prevPage) => prevPage - 1)}
+        >
+          Prev page
+        </Button>
+        <Button
+          type="button"
+          disabled={!planetsQuery.data?.next}
+          onClick={() => setPage((prevPage) => prevPage + 1)}
+        >
+          Next page
+        </Button>
+      </ButtonGroup>
 
-          <div
-            className="position-fixed bottom-0 end-0 p-3"
-            style={{ zIndex: 11 }}
-          >
-            <Toast isOpen={planetsQuery.isFetching}>
-              <ToastHeader>Star Wars API</ToastHeader>
-              <ToastBody className="text-start">
-                Loading more planets...
-              </ToastBody>
-            </Toast>
-          </div>
-        </>
-      )}
-    </div>
+      <div className="position-fixed bottom-0 end-0 p-3" style={{ zIndex: 11 }}>
+        <Toast isOpen={planetsQuery.isFetching}>
+          <ToastHeader>Star Wars API</ToastHeader>
+          <ToastBody className="text-start">Loading more planets...</ToastBody>
+        </Toast>
+      </div>
+    </Container>
   );
 };
 

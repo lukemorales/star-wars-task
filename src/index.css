@@ -18,10 +18,10 @@ body {
 #root {
   height: 100%;
   min-height: 100vh;
-  padding: 32px;
+  padding: 64px;
 }
 
-#root > *:only-child {
+#root > *:last-child {
   height: 100%;
 }
 

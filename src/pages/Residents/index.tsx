@@ -6,6 +6,8 @@ import { Resident } from '../../types';
 import Grid, { GridProps } from '../../components/Grid';
 import { useGetPlanetResidentsQuery } from '../../queries';
 import Heading from '../../components/Heading';
+import Footer from '../../components/Footer';
+import Container from '../../components/Container';
 
 const Residents = () => {
   const { planetId } = useParams<Record<'planetId', string>>();
@@ -31,7 +33,7 @@ const Residents = () => {
   );
 
   return (
-    <div className="text-center">
+    <Container>
       <Heading as="h1">
         Star Wars Residents in {residentsQuery.data?.planetName || '...'}
       </Heading>
@@ -41,7 +43,9 @@ const Residents = () => {
       {residentsQuery.isLoading && <div>Loading films...</div>}
 
       {residentsQuery.isSuccess && <Grid {...gridProps} />}
-    </div>
+
+      <Footer />
+    </Container>
   );
 };
 

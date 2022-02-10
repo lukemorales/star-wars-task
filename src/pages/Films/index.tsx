@@ -6,6 +6,8 @@ import { Film } from '../../types';
 import { useGetPlanetFilmsQuery } from '../../queries';
 import Grid, { GridProps } from '../../components/Grid';
 import Heading from '../../components/Heading';
+import Footer from '../../components/Footer';
+import Container from '../../components/Container';
 
 const Films = () => {
   const { planetId } = useParams<Record<'planetId', string>>();
@@ -30,7 +32,7 @@ const Films = () => {
   );
 
   return (
-    <div className="text-center d-flex flex-column align-items-center justify-content-between">
+    <Container>
       <Heading as="h1">
         Star Wars Films in {filmsQuery.data?.planetName || '...'}
       </Heading>
@@ -40,7 +42,9 @@ const Films = () => {
       {filmsQuery.isLoading && <div>Loading films...</div>}
 
       {filmsQuery.isSuccess && <Grid {...gridProps} />}
-    </div>
+
+      <Footer />
+    </Container>
   );
 };
 
