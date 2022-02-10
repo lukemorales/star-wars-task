@@ -25,6 +25,8 @@ const PlanetDetails = () => {
         'terrain',
         'surface_water',
         'population',
+        'films',
+        'residents',
       ],
       values: [planetQuery.data || ({} as Planet)],
     }),
