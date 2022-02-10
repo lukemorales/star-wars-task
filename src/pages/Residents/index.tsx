@@ -1,5 +1,3 @@
-import './styles.css';
-
 import { useMemo } from 'react';
 
 import { useParams } from 'react-router-dom';
@@ -7,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Resident } from '../../types';
 import Grid, { GridProps } from '../../components/Grid';
 import { useGetPlanetResidentsQuery } from '../../queries';
+import Heading from '../../components/Heading';
 
 const Residents = () => {
   const { planetId } = useParams<Record<'planetId', string>>();
@@ -32,10 +31,12 @@ const Residents = () => {
   );
 
   return (
-    <div className="App">
-      <h1>Star Wars Residents in {residentsQuery.data?.planetName || '...'}</h1>
+    <div className="text-center">
+      <Heading as="h1">
+        Star Wars Residents in {residentsQuery.data?.planetName || '...'}
+      </Heading>
 
-      {residentsQuery.isError && <div> An error occured</div>}
+      {residentsQuery.isError && <div>An error has happened</div>}
 
       {residentsQuery.isLoading && <div>Loading films...</div>}
 

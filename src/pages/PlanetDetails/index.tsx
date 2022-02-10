@@ -1,5 +1,3 @@
-import './styles.css';
-
 import { useMemo } from 'react';
 
 import { useParams } from 'react-router-dom';
@@ -7,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Planet } from '../../types';
 import { useGetSinglePlanetQuery } from '../../queries';
 import Grid, { GridProps } from '../../components/Grid';
+import Heading from '../../components/Heading';
 
 const PlanetDetails = () => {
   const { planetId } = useParams<Record<'planetId', string>>();
@@ -34,8 +33,12 @@ const PlanetDetails = () => {
   );
 
   return (
-    <div className="App">
-      <h1>Star Wars {planetQuery.data?.name || '...'} Details</h1>
+    <div className="text-center d-flex flex-column align-items-center justify-content-between">
+      <Heading as="h1">
+        Star Wars {planetQuery.data?.name || '...'} Details
+      </Heading>
+
+      {planetQuery.isError && <div>An error has happened</div>}
 
       {planetQuery.isLoading && <div>Loading films...</div>}
 
