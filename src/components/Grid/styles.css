@@ -25,6 +25,10 @@
   background: #f1f1f1;
 }
 
+.gridTable .numberCell {
+  text-align: right;
+}
+
 .gridActions button {
   margin: 0 5px;
 }
