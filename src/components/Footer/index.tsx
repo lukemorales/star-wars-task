@@ -1,3 +1,3 @@
-const Footer = () => <footer>Data by swapi.com</footer>;
+const Footer = () => <footer>Data by swapi.dev</footer>;
 
 export default Footer;

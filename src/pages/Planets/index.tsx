@@ -8,9 +8,12 @@ import { useGetPlanetsQuery } from '../../queries';
 import Grid, { GridProps } from '../../components/Grid';
 import Heading from '../../components/Heading';
 import Container from '../../components/Container';
+import { useAppDispatch } from '../../hooks';
+import { modalActions } from '../../slices/modal';
 
 const Planets = () => {
   const history = useHistory();
+  const dispatch = useAppDispatch();
 
   const [page, setPage] = useState(1);
   const planetsQuery = useGetPlanetsQuery(page);
@@ -47,9 +50,14 @@ const Planets = () => {
           action: (planet) => history.push(`/planets/${planet.id}/residents`),
           isEnabled: (planet) => planet.residents.length > 0,
         },
+        {
+          label: 'Edit Planet',
+          action: (planet) => dispatch(modalActions.setData(planet)),
+          isEnabled: () => true,
+        },
       ],
     }),
-    [planetsQuery.data?.results, history],
+    [planetsQuery.data?.results, history, dispatch],
   );
 
   return (
