@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { PlanetWithId } from '../types';
 
-interface FormData {
+export interface FormData {
   name: string;
   rotation_period: number;
   orbital_period: number;

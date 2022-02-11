@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import { ButtonGroup, Button, Toast, ToastHeader, ToastBody } from 'reactstrap';
+import { ButtonGroup, Button } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
 
 import type { PlanetWithId } from '../../types';
@@ -10,6 +10,7 @@ import Heading from '../../components/Heading';
 import Container from '../../components/Container';
 import { useAppDispatch } from '../../hooks';
 import { modalActions } from '../../slices/modal';
+import AppToast from '../../components/AppToast';
 
 const Planets = () => {
   const history = useHistory();
@@ -87,12 +88,11 @@ const Planets = () => {
         </Button>
       </ButtonGroup>
 
-      <div className="position-fixed bottom-0 end-0 p-3" style={{ zIndex: 11 }}>
-        <Toast isOpen={planetsQuery.isFetching}>
-          <ToastHeader>Star Wars API</ToastHeader>
-          <ToastBody className="text-start">Loading more planets...</ToastBody>
-        </Toast>
-      </div>
+      <AppToast
+        open={planetsQuery.isFetching}
+        headerText="Star Wars API"
+        bodyText="Loading more planets..."
+      />
     </Container>
   );
 };
