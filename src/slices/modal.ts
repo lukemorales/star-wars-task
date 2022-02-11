@@ -57,11 +57,13 @@ const modalSlice = createSlice({
         surface_water: convertToNumber(surface_water),
       };
     },
-    submitData(draft, action: PayloadAction<FormData>) {
+    submitData(_, action: PayloadAction<FormData>) {
       console.log(action.payload);
 
-      draft = INITIAL_STATE;
-      draft.requestStatus = Math.random() < 0.5 ? 'success' : 'error';
+      return {
+        ...INITIAL_STATE,
+        requestStatus: Math.random() < 0.5 ? 'success' : 'error',
+      };
     },
     clearData() {
       return INITIAL_STATE;
