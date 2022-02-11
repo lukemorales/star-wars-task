@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query/react';
 
+import modalReducer from '../slices/modal';
 import { planetsApi } from '../queries';
 
 export const store = configureStore({
   reducer: {
     [planetsApi.reducerPath]: planetsApi.reducer,
+    modal: modalReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(planetsApi.middleware),
