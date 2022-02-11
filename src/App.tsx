@@ -1,9 +1,7 @@
-import { useEffect } from 'react';
-
 import Router from './routers';
 import Header from './components/Header';
 import PlanetModal from './components/PlanetModal';
-import { useAppDispatch, useAppSelector } from './hooks';
+import { useAppDispatch, useAppSelector, useTimeout } from './hooks';
 import { modalActions } from './slices/modal';
 import AppToast from './components/AppToast';
 
@@ -22,19 +20,11 @@ const App = () => {
     (state) => state.modal.requestStatus,
   );
 
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-
-    if (modalRequestStatus !== 'idle') {
-      timeout = setTimeout(() => dispatch(modalActions.clearData()), 5000);
-    }
-
-    return () => {
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-    };
-  }, [dispatch, modalRequestStatus]);
+  useTimeout(
+    () => dispatch(modalActions.clearData()),
+    5000,
+    modalRequestStatus !== 'idle',
+  );
 
   return (
     <>
