@@ -1,8 +1,7 @@
-# Star Wars Recruitment Task
+# Star Wars Task
 
 ## Introduction
 
-Fork/Copy starting application from [https://github.com/MaciejDonarski/Skunexus-Start-Wars-Recruitment/tree/master](https://github.com/MaciejDonarski/Skunexus-Start-Wars-Recruitment/tree/master).
 At the start you have a simple application which displays planets from Star Wars in grid. Your task is to upgrade it respecting the principles from Tech Stack, Must-have (Good to have and paying attention also)
 
 ## The Task
@@ -47,7 +46,3 @@ No mockups but would be great if you make that app pretty :)
 * Reusability of the components
 * Code repetitions and reusability
 * Working in accordance with good practices in general
-
-## Delivery
-Delivery the application by link to public repo or zip file
-
