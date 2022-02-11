@@ -21,7 +21,7 @@ body {
   padding: 64px;
 }
 
-#root > *:last-child {
+#root > .page-container {
   height: 100%;
 }
 
